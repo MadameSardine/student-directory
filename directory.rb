@@ -1,19 +1,20 @@
 #let's put all students into an array
 students = [
-"Bernard Mordan",
-"Stephens Hat",
-"Nicole Pell",
-"Yvette Cook",
-"Elena Garrone",
-"Fadie",
-"Tim",
-"Ella Nancy Fay",
-"Andrew Hercules",
-"Camilla",
-"Pablo",
-"Rachel",
-"Anna Schechter",
-"Sandrine"
+{:name => "Bernard Mordan", :cohort => :september},
+{:name => "Stephens Hat", :cohort => :september},
+{:name => "Stephens Hat", :cohort => :september},
+{:name => "Nicole Pell", :cohort => :september},
+{:name => "Yvette Cook", :cohort => :september},
+{:name => "Elena Garrone", :cohort => :september},
+{:name => "Fadie", :cohort => :september},
+{:name => "Tim", :cohort => :september},
+{:name => "Ella Nancy Fay", :cohort => :september},
+{:name => "Andrew Hercules", :cohort => :september},
+{:name => "Camilla", :cohort => :september},
+{:name => "Pablo", :cohort => :september},
+{:name => "Rachel", :cohort => :september},
+{:name => "Anna Schechter", :cohort => :september},
+{:name => "Sandrine", :cohort => :september}
 ]
 
 def print_header
@@ -21,9 +22,9 @@ def print_header
 	puts "-------------------"
 end
 
-def print(names)
-	names.each do |name|
-		puts name
+def print(students)
+	students.each do |student|
+		puts "#{student[:name]} (#{student[:cohort]} cohort)"
 	end
 end
 
