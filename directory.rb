@@ -1,22 +1,26 @@
-student_count = 14
-
-#first we print the list of students
+#let's put all students into an array
+students = [
+"Bernard Mordan",
+"Stephens Hat",
+"Nicole Pell",
+"Yvette Cook",
+"Elena Garrone",
+"Fadie",
+"Tim",
+"Ella Nancy Fay",
+"Andrew Hercules",
+"Camilla",
+"Pablo",
+"Rachel",
+"Anna Schechter",
+"Sandrine"
+]
+#and then print them
 puts "The students of my cohort at Makers Academy"
-puts "------------"
-puts "Bernard Mordan"
-puts "Stephens Hat"
-puts "Nicole Pell"
-puts "Yvette Cook"
-puts "Elena Garrone"
-puts "Fadie"
-puts "Tim"
-puts "Ella Nancy Fay"
-puts "Andrew Hercules"
-puts "Camilla"
-puts "Pablo"
-puts "Rachel"
-puts "Anna Schechter"
-puts "Sandrine"
+puts "-------------------"
+students.each do |student|
+	puts student
+end
 
 #finally, we print the total
-puts "Overall it looks like we have #{student_count} students but some names may be missing from the list."
+puts "Overall it looks like we have #{student_length} students but some names may be missing from the list."
