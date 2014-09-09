@@ -14,3 +14,6 @@ puts "Pablo"
 puts "Rachel"
 puts "Anna Schechter"
 puts "Sandrine"
+print "Overall it looks like we have"
+print 14
+print " students but some names may be missing from the list."
