@@ -1,22 +1,18 @@
 def input_students
-	print "Please enter the names, hobbies, country of birth and height of the students.\nTo finish, just hit return 5 times.\n"
+	print "Please enter the name and cohort of the students.\nTo finish, just hit return 3 times.\n"
 	#create an empty array
 	students = []
 	#gets the information
 	name = gets.chomp
-	hobbies = gets.chomp
-	country_birth = gets.chomp
-	height = gets.chomp
+	cohort = gets.chomp
 	# while the name is not empty, repeat this code
 	while !name.empty? do
 		# add the student hash to the array
-		students << {:name => name, :cohort => :september, :hobbies => hobbies, :country_birth => country_birth, :height => height}
+		students << {:name => name, :cohort => cohort}
 		print "Now we have #{students.length} students\nPlease enter information for next student\n"
 		#get another name from the user
 		name = gets.chomp
-		hobbies = gets.chomp
-		country_birth = gets.chomp	
-		height = gets.chomp
+		cohort = gets.chomp
 	end
 	#return the array of students
 	students
@@ -27,8 +23,8 @@ def print_header
 end
 
 def print_(students)
-	students.each_with_index do |student, index|
-		puts "#{index + 1}. #{student[:name]}, born in #{student[:country_birth]}, #{student[:height]} m high (#{student[:cohort]} cohort). Hobbies are: #{student[:hobbies]}\n"
+	students.each do |student|
+		puts "#{student[:name]}, (#{student[:cohort]} cohort)".center(60)
 	end
 end
 
