@@ -1,3 +1,34 @@
+def interactive_menu
+	students = []
+	loop do
+		# 1. print the menu and ask the user what to do
+		puts "1. Input the students"
+		puts "2. Show the students"
+		puts "9. Exit"
+
+		# 2. read the input and save it into a variable
+		selection = gets.chomp
+
+		# 3. do what the user has asked
+		case selection
+			when "1"
+				# input the students
+				students = input_students
+			when "2"
+				# show the students
+				print_header
+				print_(students)
+				print_footer (students)
+			when "9"
+				exit # this will cause the program to terminate
+			else
+				puts "I don't know what you meant, try again"
+		end
+	end
+end
+
+
+
 def months
 	["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 end
@@ -68,12 +99,4 @@ def print_footer(names)
 	puts "Overall it looks like we have #{names.length} #{students_form} but some names may be missing from the list."
 end
 
-#nothing happens until we call the methods
-students = input_students
-if students.empty?
-	then puts "No student for now"
-	else
-	print_header
-	print_(students)
-	print_footer(students)
-end
+interactive_menu
