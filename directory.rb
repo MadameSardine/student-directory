@@ -43,7 +43,15 @@ end
 
 def print_(students)
 	students.each do |student|
-		puts "#{student[:name]}, (#{student[:cohort]} cohort)"
+		puts "\t*#{student[:name]}, (#{student[:cohort]} cohort)"
+	end
+end
+
+def print_by_cohort(months, students)
+	months.each do |month|
+		puts "Students in the #{month} cohort:"
+		students_cohort = students.select {|student| month == student[:cohort]}
+		print_(students_cohort)
 	end
 end
 
@@ -54,5 +62,5 @@ end
 #nothing happens until we call the methods
 students = input_students
 print_header
-print_(students)
+print_by_cohort(months, students)
 print_footer(students)
