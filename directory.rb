@@ -37,13 +37,13 @@ def input_students
 	# ask for student name
 	print "Please enter the name of the student.\nTo finish, just hit return 2 times.\n"
 	# gets the name
-	name = gets.chomp
+	name = STDIN.gets.chomp
 	# while the name is not empty, repeat this code
 	while !name.empty? do
 		# ask for the cohort
 		print "What is the cohort?"
 		# gets the cohort
-		cohort = gets.chomp.downcase.to_sym
+		cohort = STDIN.gets.chomp.downcase.to_sym
 		# set a default value for cohort if empty
 		if cohort.empty?
 			then cohort = "Unknown"
@@ -51,7 +51,7 @@ def input_students
 			# check the spelling of the cohort
 			while !@months.include?cohort
 				puts "Please re-enter cohort"
-				cohort = gets.chomp.downcase.to_sym
+				cohort = STDIN.gets.chomp.downcase.to_sym
 			end
 		end
 		# add the student hash to the array
@@ -59,7 +59,7 @@ def input_students
 		# print the number of student(s) with the correct form
 		print "Now we have #{@students.length} #{students_form}.\nPlease enter the name of the next student\n"
 		#get another name from the user
-		name = gets.chomp
+		name = STDIN.gets.chomp
 	end
 	#return the array of students
 	@students
@@ -103,7 +103,7 @@ def interactive_menu
 		# 1. print the menu and ask the user what to do
 		print_menu
 		# 2. read the input and do what the user has asked
-		process(gets.chomp)
+		process(STDIN.gets.chomp)
 	end
 end
 
@@ -119,8 +119,8 @@ def save_students
 	file.close
 end
 
-def load_students
-	file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+	file = File.open(filename, "r")
 	file.readlines.each do |line|
 		name, cohort = line.chomp.split(",")
 		add_student(name, cohort)
@@ -132,4 +132,17 @@ def add_student(name, cohort)
  	@students << {:name => name, :cohort => cohort.to_sym}
 end
 
+def try_load_students
+	filename = ARGV.first # first argument from the command line
+	return if filename.nil? # get out of the method if it isn't given
+	if File.exists?(filename) # if it exists
+		load_students(filename)
+		puts "Loaded #{@students.length} from #{filename}"
+	else # if it doesn't exist
+		puts "Sorry, #{filename} doesn't exist."
+		exit # quit the program
+	end
+end
+
+try_load_students
 interactive_menu
