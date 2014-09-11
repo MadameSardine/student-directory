@@ -70,6 +70,10 @@ end
 
 #nothing happens until we call the methods
 students = input_students
-print_header
-print_(students)
-print_footer(students)
+if students.empty?
+	then puts "No student for now"
+	else
+	print_header
+	print_(students)
+	print_footer(students)
+end
