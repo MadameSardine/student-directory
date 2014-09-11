@@ -1,18 +1,37 @@
+def months
+	["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+end
+
 def input_students
-	print "Please enter the name and cohort of the students.\nTo finish, just hit return 3 times.\n"
-	#create an empty array
+	# create an empty array
 	students = []
-	#gets the information
+
+	# ask for student name
+	print "Please enter the name of the first student.\nTo finish, just hit return 2 times.\n"
+	# gets the name
 	name = gets.chomp
-	cohort = gets.chomp
 	# while the name is not empty, repeat this code
 	while !name.empty? do
+		# ask for the cohort
+		print "What is the cohort?"
+		# gets the cohort
+		cohort = gets.chomp.capitalize
+		# set a default value for cohort if empty
+		if cohort.empty?
+			then cohort = "Unknown"
+		else
+			# check the spelling of the cohort
+			while !months.include?cohort
+				puts "Please re-enter cohort"
+				cohort = gets.chomp.capitalize
+			end
+		end
+
 		# add the student hash to the array
 		students << {:name => name, :cohort => cohort}
-		print "Now we have #{students.length} students\nPlease enter information for next student\n"
+		print "Now we have #{students.length} students\nPlease enter the name of the next student\n"
 		#get another name from the user
 		name = gets.chomp
-		cohort = gets.chomp
 	end
 	#return the array of students
 	students
@@ -24,7 +43,7 @@ end
 
 def print_(students)
 	students.each do |student|
-		puts "#{student[:name]}, (#{student[:cohort]} cohort)".center(60)
+		puts "#{student[:name]}, (#{student[:cohort]} cohort)"
 	end
 end
 
