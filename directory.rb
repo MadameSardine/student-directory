@@ -29,7 +29,12 @@ def input_students
 
 		# add the student hash to the array
 		students << {:name => name, :cohort => cohort}
-		print "Now we have #{students.length} students\nPlease enter the name of the next student\n"
+		# print the number of student(s) with the correct form
+		if students.length > 1
+			then students_form = "students"
+			else students_form = "student"
+		 end
+		print "Now we have #{students.length} #{students_form}\nPlease enter the name of the next student\n"
 		#get another name from the user
 		name = gets.chomp
 	end
@@ -56,11 +61,15 @@ def print_by_cohort(months, students)
 end
 
 def print_footer(names)
-print "Overall it looks like we have #{names.length} students but some names may be missing from the list.\n"
+	if names.length > 1
+		then students_form = "students"
+		else students_form = "student"
+	end
+	puts "Overall it looks like we have #{names.length} #{students_form} but some names may be missing from the list."
 end
 
 #nothing happens until we call the methods
 students = input_students
 print_header
-print_by_cohort(months, students)
+print_(students)
 print_footer(students)
