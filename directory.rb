@@ -1,6 +1,6 @@
 @students = []
 @students_cohort = []
-@months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+@months = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
 
 def print_header
 	print "The students of my cohort at Makers Academy\n-------------------\n"
@@ -43,7 +43,7 @@ def input_students
 		# ask for the cohort
 		print "What is the cohort?"
 		# gets the cohort
-		cohort = gets.chomp.capitalize
+		cohort = gets.chomp.downcase.to_sym
 		# set a default value for cohort if empty
 		if cohort.empty?
 			then cohort = "Unknown"
@@ -51,11 +51,11 @@ def input_students
 			# check the spelling of the cohort
 			while !@months.include?cohort
 				puts "Please re-enter cohort"
-				cohort = gets.chomp.capitalize
+				cohort = gets.chomp.downcase.to_sym
 			end
 		end
 		# add the student hash to the array
-		@students << {:name => name, :cohort => cohort}
+		add_student(name, cohort) 
 		# print the number of student(s) with the correct form
 		print "Now we have #{@students.length} #{students_form}.\nPlease enter the name of the next student\n"
 		#get another name from the user
@@ -69,6 +69,7 @@ def print_menu
 	puts "1. Input the students"
 	puts "2. Show the students"
 	puts "3. Save the list to students.csv"
+	puts "4. Load the list from students.csv"
 	puts "9. Exit"
 end
 
@@ -88,6 +89,8 @@ def process(selection)
 			show_students
 		when "3"
 			save_students
+		when "4"
+			load_students
 		when "9"
 			exit # this will cause the program to terminate
 		else
@@ -114,6 +117,19 @@ def save_students
 		file.puts csv_line
 	end
 	file.close
+end
+
+def load_students
+	file = File.open("students.csv", "r")
+	file.readlines.each do |line|
+		name, cohort = line.chomp.split(",")
+		add_student(name, cohort)
+	end
+	file.close
+end
+
+def add_student(name, cohort)
+ 	@students << {:name => name, :cohort => cohort.to_sym}
 end
 
 interactive_menu
