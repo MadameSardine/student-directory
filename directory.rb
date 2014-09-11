@@ -1,44 +1,46 @@
+@students = []
+@students_cohort = []
+@months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+def print_menu
+	puts "1. Input the students"
+	puts "2. Show the students"
+	puts "9. Exit"
+end
+
+def show_students
+	print_header
+	print_students_list
+	print_footer
+end
+
+def process(selection)
+	case selection
+		when "1"
+			# input the students
+			input_students
+		when "2"
+			# show the students
+			show_students
+		when "9"
+			exit # this will cause the program to terminate
+		else
+			puts "I don't know what you meant, try again"
+	end	
+end
+
 def interactive_menu
-	students = []
 	loop do
 		# 1. print the menu and ask the user what to do
-		puts "1. Input the students"
-		puts "2. Show the students"
-		puts "9. Exit"
-
-		# 2. read the input and save it into a variable
-		selection = gets.chomp
-
-		# 3. do what the user has asked
-		case selection
-			when "1"
-				# input the students
-				students = input_students
-			when "2"
-				# show the students
-				print_header
-				print_(students)
-				print_footer (students)
-			when "9"
-				exit # this will cause the program to terminate
-			else
-				puts "I don't know what you meant, try again"
-		end
+		print_menu
+		# 2. read the input and do what the user has asked
+		process(gets.chomp)
 	end
 end
 
-
-
-def months
-	["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-end
-
 def input_students
-	# create an empty array
-	students = []
-
 	# ask for student name
-	print "Please enter the name of the first student.\nTo finish, just hit return 2 times.\n"
+	print "Please enter the name of the student.\nTo finish, just hit return 2 times.\n"
 	# gets the name
 	name = gets.chomp
 	# while the name is not empty, repeat this code
@@ -52,51 +54,52 @@ def input_students
 			then cohort = "Unknown"
 		else
 			# check the spelling of the cohort
-			while !months.include?cohort
+			while !@months.include?cohort
 				puts "Please re-enter cohort"
 				cohort = gets.chomp.capitalize
 			end
 		end
-
 		# add the student hash to the array
-		students << {:name => name, :cohort => cohort}
+		@students << {:name => name, :cohort => cohort}
 		# print the number of student(s) with the correct form
-		if students.length > 1
-			then students_form = "students"
-			else students_form = "student"
-		 end
-		print "Now we have #{students.length} #{students_form}\nPlease enter the name of the next student\n"
+		print "Now we have #{@students.length} #{students_form}.\nPlease enter the name of the next student\n"
 		#get another name from the user
 		name = gets.chomp
 	end
 	#return the array of students
-	students
+	@students
 end
 
 def print_header
 	print "The students of my cohort at Makers Academy\n-------------------\n"
 end
 
-def print_(students)
-	students.each do |student|
-		puts "\t*#{student[:name]}, (#{student[:cohort]} cohort)"
+def print_students_list
+	@students.each do |student|
+		puts "\t*#{student[:name].capitalize}, (#{student[:cohort]} cohort)"
 	end
 end
 
-def print_by_cohort(months, students)
-	months.each do |month|
+def print_by_cohort
+	@months.each do |month|
 		puts "Students in the #{month} cohort:"
-		students_cohort = students.select {|student| month == student[:cohort]}
-		print_(students_cohort)
+		@students_cohort = @students.select {|student| month == student[:cohort]}
+		@students_cohort.each do |students_cohort|
+			puts "\t*#{students_cohort[:name].capitalize}"
+		end
 	end
 end
 
-def print_footer(names)
-	if names.length > 1
-		then students_form = "students"
-		else students_form = "student"
-	end
-	puts "Overall it looks like we have #{names.length} #{students_form} but some names may be missing from the list."
+def print_footer
+	puts "Overall it looks like we have #{@students.length} #{students_form} but some names may be missing from the list."
 end
+
+def students_form 
+	if @students.length == 1
+		then "student"
+	else "students"
+	end
+end
+
 
 interactive_menu
