@@ -33,6 +33,30 @@ def students_form
 	end
 end
 
+def set_cohort
+	# set a default value for cohort if empty
+	if @cohort.empty?
+		then @cohort = "unknown"
+	else
+		@cohort
+	end
+end
+
+def ask_cohort
+	print "What is the cohort?"
+	# gets the cohort
+	@cohort = STDIN.gets.chomp.downcase.to_sym
+	# check the spelling of the cohort
+	while !@months.include?@cohort 
+		puts "Please re-enter cohort"
+		@cohort = STDIN.gets.chomp.downcase.to_sym
+		if @cohort.empty?
+			break
+		end
+	end
+	set_cohort
+end
+
 def input_students
 	# ask for student name
 	print "Please enter the name of the student.\nTo finish, just hit return 2 times.\n"
@@ -41,21 +65,9 @@ def input_students
 	# while the name is not empty, repeat this code
 	while !name.empty? do
 		# ask for the cohort
-		print "What is the cohort?"
-		# gets the cohort
-		cohort = STDIN.gets.chomp.downcase.to_sym
-		# set a default value for cohort if empty
-		if cohort.empty?
-			then cohort = "Unknown"
-		else
-			# check the spelling of the cohort
-			while !@months.include?cohort
-				puts "Please re-enter cohort"
-				cohort = STDIN.gets.chomp.downcase.to_sym
-			end
-		end
+		ask_cohort
 		# add the student hash to the array
-		add_student(name, cohort) 
+		add_student(name, @cohort) 
 		# print the number of student(s) with the correct form
 		print "Now we have #{@students.length} #{students_form}.\nPlease enter the name of the next student\n"
 		#get another name from the user
@@ -63,6 +75,10 @@ def input_students
 	end
 	#return the array of students
 	@students
+end
+
+def add_student(name, cohort)
+ 	@students << {:name => name, :cohort => cohort}
 end
 
 def print_menu
@@ -126,10 +142,6 @@ def load_students(filename = "students.csv")
 		add_student(name, cohort)
 	end
 	file.close
-end
-
-def add_student(name, cohort)
- 	@students << {:name => name, :cohort => cohort.to_sym}
 end
 
 def try_load_students
